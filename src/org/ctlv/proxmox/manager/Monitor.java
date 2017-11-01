@@ -7,33 +7,30 @@ public class Monitor implements Runnable {
 
 	Analyzer analyzer;
 	ProxmoxAPI api;
-	
+
 	public Monitor(ProxmoxAPI api, Analyzer analyzer) {
 		this.api = api;
 		this.analyzer = analyzer;
 	}
-	
 
 	@Override
 	public void run() {
-		
-		while(true) {
-			
-			// Récupérer les données sur les serveurs
+
+		while (true) {
+
+			// RÃ©cupÃ©rer les donnÃ©es sur les serveurs
 			// ...
 
-			
 			// Lancer l'anlyse
 			// ...
 
-			
-			// attendre une certaine période
+			// attendre une certaine pÃ©riode
 			try {
 				Thread.sleep(Constants.MONITOR_PERIOD * 1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
 }

@@ -25,10 +25,11 @@ public class Main {
 		}
 
 		print(api);
-		//api.createCT(Constants.SERVER1, Long.toString(Constants.CT_BASE_ID), Constants.CT_BASE_NAME + Constants.CT_BASE_ID%100, Constants.RAM_SIZE[1]);
+		// api.createCT(Constants.SERVER1, Long.toString(Constants.CT_BASE_ID),
+		// Constants.CT_BASE_NAME + Constants.CT_BASE_ID%100, Constants.RAM_SIZE[1]);
 		api.startCT(Constants.SERVER1, Long.toString(Constants.CT_BASE_ID));
 		LXC ct = api.getCT(Constants.SERVER1, Long.toString(Constants.CT_BASE_ID));
-		System.out.println("cpu : " + ct.getCpu() + "\nstatus : "+ ct.getStatus());
+		System.out.println("cpu : " + ct.getCpu() + "\nstatus : " + ct.getStatus());
 		print(api);
 
 	}

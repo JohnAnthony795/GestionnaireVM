@@ -10,7 +10,7 @@ public class Constants {
 	
 	public static String SERVER1 = "srv-px3";  // exemple "srv-px2"
 	public static String SERVER2 = "srv-px4";
-	public static String CT_BASE_NAME = "ct-tpgei-ctlv-A23-ct";  // exemple: ct-tpgei-ctlv-A23-ct � concat�ner avec le num�ro du CT
+	public static String CT_BASE_NAME = "ct-tpgei-ctlv-A23-ct";  // exemple: ct-tpgei-ctlv-A23-ct à concaténer avec le numéro du CT
 	public static long CT_BASE_ID = 12300;
 
 	
@@ -28,6 +28,4 @@ public class Constants {
 	public static float MIGRATION_THRESHOLD = 0.08f;
 	public static float DROPPING_THRESHOLD = 0.12f;
 	public static float MAX_THRESHOLD = 0.16f;
-			
-
 }

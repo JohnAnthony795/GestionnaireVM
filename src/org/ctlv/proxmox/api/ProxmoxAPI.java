@@ -21,11 +21,11 @@ public class ProxmoxAPI {
 	private String Ticket;
 	private String Token;
 	private Date TicketTimestamp;
-	
+
 	public ProxmoxAPI() {
 		this.TicketTimestamp = null;
 	}
-	
+
 	public void login() throws JSONException, LoginException, IOException {
 		RestClient client = new RestClient("https://" + Constants.HOST + ":8006/api2/json/access/ticket");
 		client.addParam("username", Constants.USER_NAME);
@@ -41,7 +41,7 @@ public class ProxmoxAPI {
 			JSONObject data = jObj.getJSONObject("data");
 			this.Ticket = data.getString("ticket");
 			this.Token = data.getString("CSRFPreventionToken");
-			this.TicketTimestamp = new Date(); 
+			this.TicketTimestamp = new Date();
 			return;
 		} else if (client.getResponseCode() == HttpURLConnection.HTTP_INTERNAL_ERROR) {
 			throw new LoginException("Login failed. Please try again");
@@ -56,9 +56,9 @@ public class ProxmoxAPI {
 		}
 	}
 
-	public JSONObject doAction(String Path, RestClient.RequestMethod method, Map<String, String> data) 
+	public JSONObject doAction(String Path, RestClient.RequestMethod method, Map<String, String> data)
 			throws JSONException, LoginException, IOException {
-		
+
 		checkLoginTicket();
 		RestClient client = new RestClient("https://" + Constants.HOST + ":8006/api2/json" + Path);
 		if (!method.equals(RestClient.RequestMethod.GET))
@@ -84,9 +84,8 @@ public class ProxmoxAPI {
 		}
 	}
 
-
 	// Clusters Nodes
-	public List<String> getNodes() throws LoginException, JSONException, IOException {		
+	public List<String> getNodes() throws LoginException, JSONException, IOException {
 		List<String> res = new ArrayList<String>();
 		JSONObject jObj = doAction("/nodes", RestClient.RequestMethod.GET, null);
 		JSONArray data = jObj.getJSONArray("data");
@@ -96,21 +95,22 @@ public class ProxmoxAPI {
 		}
 		return res;
 	}
-	
+
 	public Node getNode(String name) throws LoginException, JSONException, IOException {
 		JSONObject obj = doAction("/nodes/" + name + "/status", RestClient.RequestMethod.GET, null);
 		return new Node(obj.getJSONObject("data"));
 	}
 
 	// LXC Containers
-	public void createCT(String node, String ctID, String ctName, long ctMemory) throws LoginException, JSONException, IOException {
+	public void createCT(String node, String ctID, String ctName, long ctMemory)
+			throws LoginException, JSONException, IOException {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("ostemplate", Constants.CT_TEMPLATE);
 		data.put("vmid", ctID);
 		data.put("hostname", ctName);
 		data.put("memory", Long.toString(ctMemory));
 		data.put("storage", "vm");
-		data.put("password",Constants.CT_PASSWORD);
+		data.put("password", Constants.CT_PASSWORD);
 		data.put("swap", Long.toString(ctMemory));
 		data.put("rootfs", Constants.CT_HDD);
 		data.put("cpulimit", "1");
@@ -118,21 +118,28 @@ public class ProxmoxAPI {
 		JSONObject obj = doAction("/nodes/" + node + "/lxc", RestClient.RequestMethod.POST, data);
 		System.out.println(obj.toString());
 	}
+
 	public void startCT(String node, String ctID) throws LoginException, JSONException, IOException {
 		@SuppressWarnings("unused")
-		JSONObject obj = doAction("/nodes/" + node + "/lxc/" + ctID + "/status/start", RestClient.RequestMethod.POST, null);
+		JSONObject obj = doAction("/nodes/" + node + "/lxc/" + ctID + "/status/start", RestClient.RequestMethod.POST,
+				null);
 	}
+
 	public void stopCT(String node, String ctID) throws LoginException, JSONException, IOException {
 		@SuppressWarnings("unused")
-		JSONObject obj = doAction("/nodes/" + node + "/lxc/" + ctID + "/status/stop", RestClient.RequestMethod.POST, null);
-	}	
-	public void migrateCT(String srcNode, String ctID, String dstNode) throws LoginException, JSONException, IOException {
+		JSONObject obj = doAction("/nodes/" + node + "/lxc/" + ctID + "/status/stop", RestClient.RequestMethod.POST,
+				null);
+	}
+
+	public void migrateCT(String srcNode, String ctID, String dstNode)
+			throws LoginException, JSONException, IOException {
 		Map<String, String> data = new HashMap<String, String>();
 		data.put("target", dstNode);
 		@SuppressWarnings("unused")
-		JSONObject obj = doAction("/nodes/" + srcNode + "/lxc/" + ctID + "/migrate", RestClient.RequestMethod.POST, data);
+		JSONObject obj = doAction("/nodes/" + srcNode + "/lxc/" + ctID + "/migrate", RestClient.RequestMethod.POST,
+				data);
 	}
-	
+
 	public LXC getCT(String node, String ctID) throws LoginException, JSONException, IOException {
 		LXC res = null;
 		JSONObject obj = doAction("/nodes/" + node + "/lxc", RestClient.RequestMethod.GET, null);
@@ -146,6 +153,7 @@ public class ProxmoxAPI {
 		}
 		return res;
 	}
+
 	public List<String> getCTList(String node) throws LoginException, JSONException, IOException {
 		List<String> res = new ArrayList<String>();
 		JSONObject jObj = doAction("/nodes/" + node + "/lxc", RestClient.RequestMethod.GET, null);
@@ -157,7 +165,6 @@ public class ProxmoxAPI {
 		return res;
 	}
 
-	
 	public List<LXC> getCTs(String node) throws LoginException, JSONException, IOException {
 		List<LXC> res = new ArrayList<LXC>();
 		JSONObject jObj = doAction("/nodes/" + node + "/lxc", RestClient.RequestMethod.GET, null);
@@ -168,8 +175,5 @@ public class ProxmoxAPI {
 		}
 		return res;
 	}
-
-
-
 
 }

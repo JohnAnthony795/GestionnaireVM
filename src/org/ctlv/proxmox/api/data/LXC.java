@@ -4,20 +4,19 @@ import org.json.JSONObject;
 
 public class LXC {
 
-
 	String template;
 	String vmid;
-	String name;	
-	String status;	
-	String type;	
-	
-	long disk;		
+	String name;
+	String status;
+	String type;
+
+	long disk;
 	long maxdisk;
 	long diskwrite;
 	long diskread;
-	
-	long netin;	
-	long netout;	
+
+	long netin;
+	long netout;
 
 	long cpu;
 	int cpus;
@@ -26,38 +25,38 @@ public class LXC {
 	long pid;
 
 	long mem;
-	long maxmem;	
+	long maxmem;
 	long swap;
 	long maxswap;
-	
+
 	public LXC(JSONObject data) {
-		
+
 		template = data.optString("template");
 		vmid = data.optString("vmid");
 		name = data.optString("name");
 		status = data.optString("status");
 		type = data.optString("type");
-		
+
 		disk = data.optLong("disk");
 		maxdisk = data.optLong("maxdisk");
 		diskwrite = data.optLong("diskwrite");
 		diskread = data.optLong("diskread");
-		
+
 		netin = data.optLong("netin");
 		netout = data.optLong("netout");
-		
+
 		cpu = data.optLong("cpu");
 		cpus = data.optInt("cpus");
 		uptime = data.optLong("uptime");
 		lock = data.optLong("lock");
-		
+
 		mem = data.optLong("mem");
 		maxmem = data.optLong("maxmem");
 		swap = data.optLong("swap");
 		maxswap = data.optLong("maxswap");
-		
+
 	}
-	
+
 	public String getTemplate() {
 		return template;
 	}
@@ -177,7 +176,7 @@ public class LXC {
 	public void setLock(long lock) {
 		this.lock = lock;
 	}
-	
+
 	public long getPid() {
 		return pid;
 	}

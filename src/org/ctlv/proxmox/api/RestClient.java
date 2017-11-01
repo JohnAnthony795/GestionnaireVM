@@ -79,8 +79,8 @@ public class RestClient {
 		headers = new ArrayList<NameValuePair>();
 	}
 
-	// Be warned that this is sent in clear text, don't use basic auth unless
-	// you have to.
+	// Be warned that this is sent in clear text, don't use basic auth unless you
+	// have to.
 	public void addBasicAuthentication(String user, String pass) {
 		authentication = true;
 		username = user;
@@ -105,31 +105,31 @@ public class RestClient {
 
 	public void execute(RequestMethod method) throws Exception {
 		switch (method) {
-			case GET: {
-				HttpGet request = new HttpGet(url + addGetParams());
-				request = (HttpGet) addHeaderParams(request);
-				executeRequest(request, url);
-				break;
-			}
-			case POST: {
-				HttpPost request = new HttpPost(url);
-				request = (HttpPost) addHeaderParams(request);
-				request = (HttpPost) addBodyParams(request);
-				executeRequest(request, url);
-				break;
-			}
-			case PUT: {
-				HttpPut request = new HttpPut(url);
-				request = (HttpPut) addHeaderParams(request);
-				request = (HttpPut) addBodyParams(request);
-				executeRequest(request, url);
-				break;
-			}
-			case DELETE: {
-				HttpDelete request = new HttpDelete(url);
-				request = (HttpDelete) addHeaderParams(request);
-				executeRequest(request, url);
-			}
+		case GET: {
+			HttpGet request = new HttpGet(url + addGetParams());
+			request = (HttpGet) addHeaderParams(request);
+			executeRequest(request, url);
+			break;
+		}
+		case POST: {
+			HttpPost request = new HttpPost(url);
+			request = (HttpPost) addHeaderParams(request);
+			request = (HttpPost) addBodyParams(request);
+			executeRequest(request, url);
+			break;
+		}
+		case PUT: {
+			HttpPut request = new HttpPut(url);
+			request = (HttpPut) addHeaderParams(request);
+			request = (HttpPut) addBodyParams(request);
+			executeRequest(request, url);
+			break;
+		}
+		case DELETE: {
+			HttpDelete request = new HttpDelete(url);
+			request = (HttpDelete) addHeaderParams(request);
+			executeRequest(request, url);
+		}
 		}
 	}
 

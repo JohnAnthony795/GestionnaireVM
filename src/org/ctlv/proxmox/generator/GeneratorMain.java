@@ -48,7 +48,7 @@ public class GeneratorMain {
 
 		while (true) {
 
-			// 1. Calculer la quantit� de RAM utilis�e par mes CTs sur chaque serveur
+			// 1. Calculer la quantité de RAM utilisée par mes CTs sur chaque serveur
 			long memOnServer1 = 0;
 			long memOnServer2 = 0;
 
@@ -80,7 +80,7 @@ public class GeneratorMain {
 				// planifier la prochaine cr�ation
 				int timeToWait = getNextEventExponential(lambda); // par exemple une loi expo d'une moyenne de 30sec
 
-				// attendre jusqu'au prochain �v�nement
+				// attendre jusqu'au prochain évènement
 				Thread.sleep(1000 * timeToWait);
 				try {
 					api.startCT(serverName, Long.toString(baseID - 1));

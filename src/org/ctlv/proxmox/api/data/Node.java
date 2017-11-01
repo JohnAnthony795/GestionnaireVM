@@ -6,26 +6,26 @@ import org.json.JSONObject;
 public class Node {
 	private float cpu;
 	private int uptime;
-	
+
 	private long memory_used;
 	private long memory_free;
 	private long memory_total;
-	
+
 	private long rootfs_free;
 	private long rootfs_total;
 	private long rootfs_used;
 
 	public Node(JSONObject data) throws JSONException {
 		JSONObject o;
-		
+
 		cpu = (float) data.getDouble("cpu");
 		uptime = data.getInt("uptime");
-		
+
 		o = data.getJSONObject("memory");
 		memory_free = o.getLong("free");
 		memory_total = o.getLong("total");
 		memory_used = o.getLong("used");
-		
+
 		o = data.getJSONObject("rootfs");
 		rootfs_free = o.getLong("free");
 		rootfs_total = o.getLong("total");
