@@ -1,6 +1,7 @@
 package org.ctlv.proxmox.generator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -38,10 +39,11 @@ public class GeneratorMain {
 		int lambda = (int) Constants.GENERATION_WAIT_TIME;
 
 		Map<String, List<LXC>> myCTsPerServer = new HashMap<String, List<LXC>>();
+		myCTsPerServer.put(Constants.SERVER1, new ArrayList<LXC>());
+		myCTsPerServer.put(Constants.SERVER2, new ArrayList<LXC>());
 
 		ProxmoxAPI api = new ProxmoxAPI();
 		Random rndServer = new Random(new Date().getTime());
-		Random rndRAM = new Random(new Date().getTime());
 
 		long memAllowedOnServer1 = (long) (api.getNode(Constants.SERVER1).getMemory_total() * Constants.MAX_THRESHOLD);
 		long memAllowedOnServer2 = (long) (api.getNode(Constants.SERVER2).getMemory_total() * Constants.MAX_THRESHOLD);
@@ -64,7 +66,8 @@ public class GeneratorMain {
 			float memRatioOnServer1 = memOnServer1 / memAllowedOnServer1;
 			float memRatioOnServer2 = memOnServer2 / memAllowedOnServer2;
 
-			if (memRatioOnServer1 < 1 && memRatioOnServer2 < 1) {
+			if (memRatioOnServer1 < 1 && memRatioOnServer2 < 1) { // On arrête la génération sur les deux conteneurs si
+																	// l'un d'entre eux dépasse sa RAM autorisée
 
 				// choisir un serveur aléatoirement avec les ratios spécifiés 66% vs 33%
 				String serverName;
@@ -75,9 +78,11 @@ public class GeneratorMain {
 
 				// création container
 				api.createCT(serverName, Long.toString(baseID), baseCt + baseID % 100, Constants.RAM_SIZE[1]);
+				myCTsPerServer.get(serverName).add(api.getCT(serverName, Long.toString(baseID)));
+
 				baseID++;
 
-				// planifier la prochaine cr�ation
+				// planifier la prochaine création
 				int timeToWait = getNextEventExponential(lambda); // par exemple une loi expo d'une moyenne de 30sec
 
 				// attendre jusqu'au prochain évènement
