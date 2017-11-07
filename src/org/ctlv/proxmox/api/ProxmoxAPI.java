@@ -58,7 +58,6 @@ public class ProxmoxAPI {
 
 	public JSONObject doAction(String Path, RestClient.RequestMethod method, Map<String, String> data)
 			throws JSONException, LoginException, IOException {
-
 		checkLoginTicket();
 		RestClient client = new RestClient("https://" + Constants.HOST + ":8006/api2/json" + Path);
 		if (!method.equals(RestClient.RequestMethod.GET))
@@ -175,5 +174,4 @@ public class ProxmoxAPI {
 		}
 		return res;
 	}
-
 }
