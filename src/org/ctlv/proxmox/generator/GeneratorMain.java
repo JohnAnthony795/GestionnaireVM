@@ -77,8 +77,10 @@ public class GeneratorMain {
 					serverName = Constants.SERVER2;
 
 				// création container
-				api.createCT(serverName, Long.toString(baseID), baseCt + baseID % 100, Constants.RAM_SIZE[1]);
-				myCTsPerServer.get(serverName).add(api.getCT(serverName, Long.toString(baseID)));
+				if (api.getCTList(serverName).contains(baseCt + Long.toString(baseID % 100))) {
+					api.createCT(serverName, Long.toString(baseID), baseCt + baseID % 100, Constants.RAM_SIZE[1]);
+					myCTsPerServer.get(serverName).add(api.getCT(serverName, Long.toString(baseID)));
+				}
 
 				baseID++;
 
